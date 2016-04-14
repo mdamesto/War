@@ -11,13 +11,15 @@ Class Player {
 	Public function __construct ( array $kwargs ) {
 		if ($kwargs['playerName']) {
 			$this->playerName = $kwargs['playerName'];
+			print ("Player " . $this->playerName . " created..." . PHP_EOL);
 			if ($kwargs['fleetName'])
 				$this->fleetName = $kwargs['fleetName'];
 			else
 				$this->fleetName = $kwargs['playerName'] . ' fleet';
-			$this->fleet = new Fleet ( 
+			$this->Fleet = new Fleet ( 
 				array ( 'fleetName' => $this->fleetName )
 			);
+			print ($this->playerName . ' takes control of ' . $this->Fleet->getAtt('fleetName') . PHP_EOL);
 		}
 	}
 
@@ -35,8 +37,9 @@ Class Player {
 	}
 
 	public function __toString() {
-		print ('$this->playerName');
-		print ($this->Fleet);
+		print ('Player Name: ' . $this->playerName . PHP_EOL);
+		print ($this->getAtt('Fleet'));
+		return sprintf ("");
 	}
 
 	public function __clone () {

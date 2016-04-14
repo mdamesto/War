@@ -3,7 +3,7 @@
 include_once 'ImperialDestroyer.class.php';
 //include 'IMooveShoot.class.php';
 
-abstract Class Ship /*implements IMooveShoot */{
+abstract Class Ship  {
 
 	private $name;
 	private $size;

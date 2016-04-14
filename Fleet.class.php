@@ -1,22 +1,23 @@
 <?php
 
-include 'Ship.class.php';
+include_once 'Ship.class.php';
 
 Class Fleet {
 
 	private $fleetName;
-	private $fleet;
+	private $fleet = array();
 
 	public function __construct ( array $kwargs ) {
 		if ($kwargs['fleetName']) {
 			$this->fleetName = $kwargs['fleetName'];
+			print ('Fleet ' . $this->fleetName . ' as been created...' . PHP_EOL);
 		}
 	}
 
 	public function recruit ( $shipType, $shipName ) {
-		$ship = new $ship_type ( $shipName );
+		$ship = new $shipType ( $shipName );
 		array_push($this->fleet, $ship);
-		print ('and added to fleet' . $this->fleetName . PHP_EOL);
+		print ('and added to fleet ' . $this->fleetName . PHP_EOL);
 	}
 
 	public static function doc () {
@@ -33,7 +34,11 @@ Class Fleet {
 	}
 
 	public function __toString() {
-		print_r ($this->fleet);
+		foreach ($this->fleet as $key => $fleet) {
+			print (($key +1) . ': ');
+			print ($fleet);
+		}
+		return sprintf("");
 	}
 
 	public function __clone () {

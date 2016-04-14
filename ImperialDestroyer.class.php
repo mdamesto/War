@@ -1,8 +1,10 @@
 <?php
 
-include_once 'Ship.class.php';
+include_once ('Moove.trait.php');
 
-Class  ImperialDestroyer extends Ship {
+Class  ImperialDestroyer {
+
+	use Moove;
 
 	private $type = "imperial destroyer";
 	private $name;
@@ -11,11 +13,12 @@ Class  ImperialDestroyer extends Ship {
 	private $hP = 4;
 	private $pP = 10;
 	private $speed = 18;
-	private $man = 3;
+	private $man = 6;
+	private $current_man = 0;
 	private $shield = 0;
-	private $weapons;
-	private $isMoving = 0;
-	private $orient;	
+	private $weapons = arrays;
+	private $isMoving = false;
+	private $orient = 'South';	
 	private $pos = array ('x' => 0, 'y' => 0);
 
 	Public function __construct ($shipName) {
@@ -39,8 +42,9 @@ Class  ImperialDestroyer extends Ship {
 
 	public function __toString() {
 		print ($this->name . " (STATS)" . PHP_EOL . 
-		'Type: ' . $this->type . ' ( ' . $this->size[0] . ' x ' . $this->size[1] . ') ' . PHP_EOL . 
+		'Type: ' . $this->type . ' ( ' . $this->size[0] . ' x ' . $this->size[1] . ' ) ' . PHP_EOL . 
 		'HP: ' . $this->hP . ', PP: ' . $this->pP . ', shield: ' . $this->shield . ', speed: ' . $this->speed . ' , manoeuvre: ' .     $this->man . PHP_EOL );
+		return sprintf("");
 	}
 
 	public function __clone () {
