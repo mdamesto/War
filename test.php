@@ -3,9 +3,6 @@ echo "\n---HELLO---\n";
 
 include_once ('class/Board.class.php');
 include_once ('class/Player.class.php');
-include_once ('class/Fleet.class.php');
-include_once ('class/Ship.class.php');
-include_once ('class/ImperialDestroyer.class.php');
 include_once ('trait/Moove.trait.php');
 
 //$destroy1 = new ImperialDestroyer ('RUN BITCH');
@@ -14,12 +11,13 @@ include_once ('trait/Moove.trait.php');
 print ("\n\nBOARD CREATION-----------------\n\n");
 $board = new Board ();
 
-$board->add_meteor(50, 50, 20);
-$board->add_meteor(100, 20, 10);
-$board->add_meteor(10, 10, 5);
+$board->add_meteor(75, 10, 3);
+$board->add_meteor(60, 20, 4);
 
+
+/*
 print ("\n\nRECRUITING----------------------\n\n");
-$board->recruit(1, "ImperialDestroyer", "OVER OF THE STARDEATH");	
+$board->recruit(1, "ImperialDestroyer", "OVER OF THE STARDEATH");
 $board->recruit(1, "ImperialDestroyer", "PHP BADASS");
 $board->recruit(2, "ImperialDestroyer", "YOUPI");
 
@@ -36,11 +34,13 @@ $board->move(1, 0, 15);
 $board->move(1, 0, 11);
 $board->move(1, 0, 5);
 $board->move(2, 0, 42);
-
+*/
 
 print ("\n\nPLAYER RESUME-------------------\n\n");
-print ($board->getAtt('player1') . PHP_EOL);
-print ($board->getAtt('player2') . PHP_EOL);
+print ($board->getPlayer1() . PHP_EOL);
+print ($board->getPlayer2() . PHP_EOL);
+
+$board->getShips();
 
 
 print ("\n\nMAP----------------------------\n\n");
