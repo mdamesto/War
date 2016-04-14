@@ -1,7 +1,5 @@
 <?PHP
 
-require_once "Weapon.class.php";
-
 class				HeavyMachineGun extends Weapon
 {
 	public function	__construct()
