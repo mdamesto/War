@@ -1,6 +1,7 @@
 <?PHP
 
 require_once "Ship.class.php";
+require_once "HeavyMachineGun.class.php";
 
 class				ImperialDestroyer extends Ship
 {

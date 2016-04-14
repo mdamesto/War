@@ -27,7 +27,7 @@ abstract class				Ship
 		$this->_speedPp = $this->_speed;;
 		$this->_PsPp = 0;
 		foreach ($this->_weapons as $weapon)
-			$weapon->resetPP();
+			$weapon->reset_chargePP();
 	}
 
 	public function			__construct($owner)
@@ -36,6 +36,7 @@ abstract class				Ship
 			print($this . " constructed." . PHP_EOL);
 		$this->_owner = $owner;
 		$this->_state = "motionless";
+		$this->_position['dir'] = (($owner === 1) ? 'N' : 'S');
 		$this->resetPP();
 	}
 
@@ -180,6 +181,29 @@ abstract class				Ship
 	public function			get_shieldCurr()
 	{
 		return $this->_PsPp;
+	}
+
+	public function			getSpace($position, $physical = FALSE)
+	{
+		$offX = ($this->_size['x'] - 1) / 2;
+		$offY = ($this->_size['y'] - 1) / 2;
+		if ($physical !== TRUE)
+		{
+			$offX += $this->_weapons[0]->getShootAera()['near'];
+			$offY += $this->_weapons[0]->getShootAera()['near'];
+		}
+		$x = $position['x'] - $offX;
+		$y = $position['y'] - $offY;
+		$xMax = $position['x'] + $offX;
+		$yMax = $position['y'] + $offY;
+
+		print("toto" . PHP_EOL);
+		for ($i = $y; $i <= $yMax; $i++)
+		{
+			for ($j = $x; $j <= $xMax; $j++)
+				$aera[] = array('x' => $j, 'y' => $i);
+		}
+		return $aera;
 	}
 
 	public function			reset()
