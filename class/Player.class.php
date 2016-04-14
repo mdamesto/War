@@ -19,7 +19,7 @@ Class Player {
 			$this->Fleet = new Fleet ( 
 				array ( 'fleetName' => $this->fleetName )
 			);
-			print ($this->playerName . ' takes control of ' . $this->Fleet->getAtt('fleetName') . PHP_EOL);
+			print ($this->playerName . ' takes control of ' . $this->Fleet->getAtt('fleetName') . PHP_EOL . PHP_EOL);
 		}
 	}
 

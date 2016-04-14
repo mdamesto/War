@@ -17,7 +17,7 @@ Class Fleet {
 	public function recruit ( $shipType, $shipName ) {
 		$ship = new $shipType ( $shipName );
 		array_push($this->fleet, $ship);
-		print ('and added to fleet ' . $this->fleetName . PHP_EOL);
+		print ('and added to fleet ' . $this->fleetName );
 	}
 
 	public static function doc () {

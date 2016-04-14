@@ -1,6 +1,6 @@
 <?php
 
-include_once ('Moove.trait.php');
+include_once ('trait/Moove.trait.php');
 
 Class  ImperialDestroyer {
 
