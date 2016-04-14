@@ -13,8 +13,9 @@ Class  ImperialDestroyer {
 	private $hP = 4;
 	private $pP = 10;
 	private $speed = 18;
+	private $currentSpeed = 18;
 	private $man = 6;
-	private $current_man = 0;
+	private $currentMan = 0;
 	private $shield = 0;
 	private $weapons = arrays;
 	private $isMoving = false;

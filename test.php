@@ -21,14 +21,16 @@ print ("\n\nRECRUITING----------------------\n\n");
 //print ($destroy1);
 
 
-print ("\n\nMOOVES--------------------------\n\n");
+print ("\n\nMOVES--------------------------\n\n");
 $player1->getAtt('Fleet')->getAtt('fleet')[0]->orient('West');
-$player1->getAtt('Fleet')->getAtt('fleet')[0]->moove(2);
+$player1->getAtt('Fleet')->getAtt('fleet')[0]->move(2);
 $player1->getAtt('Fleet')->getAtt('fleet')[0]->orient('South');
-$player1->getAtt('Fleet')->getAtt('fleet')[0]->moove(5);
+$player1->getAtt('Fleet')->getAtt('fleet')[0]->move(5);
 $player1->getAtt('Fleet')->getAtt('fleet')[0]->orient('North');
-$player1->getAtt('Fleet')->getAtt('fleet')[0]->moove(10);
-$player1->getAtt('Fleet')->getAtt('fleet')[2]->moove(42);
+$player1->getAtt('Fleet')->getAtt('fleet')[0]->move(15);
+$player1->getAtt('Fleet')->getAtt('fleet')[0]->move(11);
+$player1->getAtt('Fleet')->getAtt('fleet')[0]->move(15);
+$player1->getAtt('Fleet')->getAtt('fleet')[2]->move(42);
 
 print ("\n\nPLAYER RESUME-------------------\n\n");
 print ($player1);
