@@ -1,5 +1,5 @@
 <?php
-
+require_once("include.php");
 
 $data = array(
   array(
@@ -30,5 +30,18 @@ $data = array(
 );
 
 
-echo json_encode($data);
+
+if ($_GET['get'] == "asteroid")
+{
+  if (isset($_SESSION['board']))
+  {
+    $board = unserialize($_SESSION['board']);
+  }
+  echo json_encode($board->sendAsteroid());
+}
+else if ($_GET['get'] == "ships") {
+  echo json_encode($data);
+}
+
+
 ?>

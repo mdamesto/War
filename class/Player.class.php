@@ -15,7 +15,7 @@ Class Player {
 		}
 	}
 
-	
+
 
 	public function __toString() {
 		print ('Player Name: ' . $this->playerName . PHP_EOL);

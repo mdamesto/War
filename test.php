@@ -1,18 +1,20 @@
 <?php
-echo "\n---HELLO---\n";
+require_once("./include.php");
 
-include_once ('class/Board.class.php');
-include_once ('class/Player.class.php');
-include_once ('trait/Moove.trait.php');
+if (isset($_SESSION['board']))
+{
+  $board = unserialize($_SESSION['board']);
+  print_r($board);
+}
+else {
+  $board = new Board ();
+}
 
-//$destroy1 = new ImperialDestroyer ('RUN BITCH');
-//print ($destroy1);
 
-print ("\n\nBOARD CREATION-----------------\n\n");
-$board = new Board ();
+
 
 $board->add_meteor(75, 10, 3);
-$board->add_meteor(60, 20, 4);
+$board->add_meteor(35, 45, 7);
 
 
 /*
@@ -36,15 +38,20 @@ $board->move(1, 0, 5);
 $board->move(2, 0, 42);
 */
 
+
+/*
 print ("\n\nPLAYER RESUME-------------------\n\n");
 print ($board->getPlayer1() . PHP_EOL);
 print ($board->getPlayer2() . PHP_EOL);
 
 $board->getShips();
 
-
+*/
 print ("\n\nMAP----------------------------\n\n");
 $board->print_map();
+
+print_r($board->sendAsteroid());
+
 
 echo "\n---BABAILLE---\n\n";
 

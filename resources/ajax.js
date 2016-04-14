@@ -1,26 +1,23 @@
 $( document ).ready(function() {
-
-toto();
-
+  toto();
 });
-
-
-
 
 function toto()
 {
-
-
-  $.getJSON( "./server.php", function( data ) {
+  $.getJSON( "./server.php?get=ships", function( data ) {
     var items = [];
-
     $.each( data, function( key, val ) {
-      console.log(key, val.pos);
-
       $('.case_'+val.pos.x+'_'+val.pos.y).addClass('v').click(function( event ) {
-          console.log(event);
       });
+    });
+  });
 
+  $.getJSON( "./server.php?get=asteroid", function( data ) {
+
+
+    var items = [];
+    $.each( data, function( key, val ) {
+      $('.case_'+val.x+'_'+val.y).addClass('a');
     });
   });
 
