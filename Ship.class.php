@@ -1,0 +1,207 @@
+<?PHP
+
+abstract class				Ship
+{
+	public static			$verbose = FALSE;
+	protected				$_owner;			//	Player 1 || 2
+	protected				$_name;				//	Badass Name
+	protected				$_spriteSrc;		//	Sprite Path
+	protected				$_actived;			//	Boolean TRUE is ever activated this tour
+	protected				$_position;			//	array('x' => Xcenter, 'y' => Ycenter, 'dir' => N || S || W || E)
+	protected				$_size;				//	array('x' => largeur, 'y' => Longueur)
+	protected				$_maneuvrability;	//	Carac
+	protected				$_speed;			//	Carac
+	protected				$_PpMax;			//	Carac
+	protected				$_PvMax;			//	Carac
+	protected				$_PvCurr;			//	Current Carac PV Value
+	protected				$_PpCurr;			//	Current Carac PP Value
+	protected				$_PsPp;				//	Current Carac Shield Value (+PP)
+	protected				$_speedPp;			//	Current Carac Speed Value (+PP)
+	protected				$_weapons;			//	array(new Weapon, new Weapon ...)
+	protected				$_state;			//	Current mobility state
+	protected				$_format = "Ship( type: %s, name: %s, sprite: %s, size: %s, center: %s, direction: %s, PV: %d, PP: %d, speed: %d, maneuvrability: %d, weapons[%d]: %s)";
+
+	protected function		resetPP()
+	{
+		$this->_PpCurr = $this->_PpMax;
+		$this->_speedPp = $this->_speed;;
+		$this->_PsPp = 0;
+		foreach ($this->_weapons as $weapon)
+			$weapon->resetPP();
+	}
+
+	public function			__construct($owner)
+	{
+		if (self::$verbose === TRUE)
+			print($this . " constructed." . PHP_EOL);
+		$this->_owner = $owner;
+		$this->_state = "motionless";
+		$this->resetPP();
+	}
+
+	public function			__destruct()
+	{
+		if (self::$verbose === TRUE)
+			print($this . " destructed." . PHP_EOL);
+	}
+
+	public function			__toString()
+	{
+		$i = sizeof($this->_weapons);
+		foreach ($this->_weapons as $weapon)
+		{
+			$str .= $weapon->getName();
+			if (--$i !== 0)
+				$str .= ", ";
+			else
+				$str .= " ";
+		}
+		return sprintf($this->_format, get_class($this), $this->_name, $this->_spriteSrc, $this->_size['L'] . "x" . $this->_size['l'], $this->center['L'] . "x" . $this->center['l'], $this->dir, $this->_PvMax, $this->_PpMax, $this->_speed, $this->_maneuvrability, sizeof($this->_weapons), $str);
+	}
+
+	public static function	doc()
+	{
+		if (file_exists('Ship.doc.txt'))
+			return file_get_contents('Ship.doc.txt');
+	}
+
+	public function			getOwner()
+	{
+		return $this->_owner;
+	}
+
+	public function			getName()
+	{
+		return $this->_name;
+	}
+
+	public function			getSprite()
+	{
+		return $this->_spriteSrc;
+	}
+
+	public function			getSize()
+	{
+		return $this->_size;
+	}
+
+	public function			getManeuvrability()
+	{
+		return $this->_maneuvrability;
+	}
+
+	public function			getSpeed()
+	{
+		return $this->_speed;
+	}
+
+	public function			getPv()
+	{
+		return $this->_PvMax;
+	}
+
+	public function			getPp()
+	{
+		return $this->_Pp;
+	}
+
+	public function			getPvCurr()
+	{
+		return $this->_PvCurr;
+	}
+
+	public function			getPpCurr()
+	{
+		return $this->_PpCurr;
+	}
+
+	public function			getPs()
+	{
+		return $this->_PsPp;
+	}
+
+	public function			getSpeedPp()
+	{
+		return $this->_speedPp;
+	}
+
+	public function			getWeapons()
+	{
+		return $this->_weapons;
+	}
+
+	public function			getActivated()
+	{
+		return $this->_activated;
+	}
+
+	public function			getPosition()
+	{
+		return $this->_position;
+	}
+
+	public function			setPosition($position)
+	{
+		$this->_position = array('x' => $position['x'], 'y' => $position['y'], 'dir' => $position['dir']);
+	}
+
+	public function			active()
+	{
+		$this->_actived = TRUE;
+	}
+
+	public function			repare()
+	{
+		if ($this->_PvCurr < $this->_PvMax)	// D6
+			$this->_PvCurr += 1;
+	}
+
+	public function			givePPshield($PP)
+	{
+		if ($PP > $this->_PpCurr)
+			return FALSE;
+		$this->_PpCurr -= $PP;
+		$this->_PsPp += $PP;
+	}
+
+	public function			givePPspeed($PP)
+	{
+		if ($PP > $this->_PpCurr)
+			return FALSE;
+		$this->_PpCurr -= $PP;
+		$this->_speedPp += $PP;				//	D6
+	}
+
+	public function			get_speedCurr()
+	{
+		return $this->_speedPp;
+	}
+
+	public function			get_shieldCurr()
+	{
+		return $this->_PsPp;
+	}
+
+	public function			reset()
+	{
+		$this->_actived = FALSE;
+		$this->resetPP();
+	}
+
+	public function			hearted($damage)
+	{
+		if ($damage >= ($this->_PvCurr + $this->_PsPp))
+			return TRUE;
+		if ($damage <= $this->_PsPp)
+		{
+			$this->_PsPp -= $damage;
+			return FALSE;
+		}
+		$damage -= $this->_PsPp;
+		$this->_PsPp = 0;
+		$this->_PvCurr -= $damage;
+		return FALSE;
+	}
+}
+
+?>
