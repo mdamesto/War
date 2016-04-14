@@ -12,7 +12,6 @@ else {
 
 
 
-//$board->add_meteor(55, 10, 9);
 $board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,8));
 
 

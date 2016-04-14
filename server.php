@@ -1,9 +1,6 @@
 <?php
 require_once("include.php");
 
-var_dump($_SESSION);
-
-
 $data = array(
   array(
     'pos'=>array('x'=>10, 'y'=>50),
