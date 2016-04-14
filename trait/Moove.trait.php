@@ -19,7 +19,7 @@ trait Moove {
 				$this->pos['y'] = $this->pos['y'] - $move;
 			$this->currentMan += $move;
 			$this->isMoving = true;
-			$this->currentSpeed -= $move; 
+			$this->currentSpeed -= $move;
 			print ($this->name . ' move ' . $move . ' times from [ ' . $old_x . ' : ' . $old_y . ' ] to [ ' . $this->pos['x'] . ' : ' . $this->pos['y'] . ']. ' . $this->currentSpeed . ' times left.' . PHP_EOL);
 		}
 		else
