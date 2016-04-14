@@ -8,16 +8,22 @@ Class Board {
 	private $ships;
 
 	public function __construct () {
-		$this->player1 = New Player ( array (
-			'playerName' => 'Joe',
-			'fleetName' => 'Acid Santhil'
-		));
-		$this->player2 = New Player ( array (
-			'playerName' => 'Gus',
-			'fleetName' => 'Tibers Chaos'
-		));
-		$this->init_map();
-		print ("BOARD CREATED" . PHP_EOL);
+
+		if (isset($_SESSION['board']))
+		{
+		}
+		else {
+			$this->player1 = New Player ( array (
+				'playerName' => 'Joe',
+				'fleetName' => 'Acid Santhil'
+			));
+			$this->player2 = New Player ( array (
+				'playerName' => 'Gus',
+				'fleetName' => 'Tibers Chaos'
+			));
+			$this->init_map();
+		}
+			print ("BOARD CREATED" . PHP_EOL);
 	}
 
 	public function getPlayer1()
@@ -33,6 +39,20 @@ Class Board {
 	public function getShips()
 	{
 		return ($this->ships);
+	}
+
+	public function sendAsteroid()
+	{
+		$jsonasteroid = array();
+		for ( $i = 0;$i< 99; $i++) {
+			for ($j = 0;$j < 99; $j++) {
+				if ($this->map[$i][$j] == "X")
+				{
+					$jsonasteroid[]= array('x' => $i, 'y' => $j);
+				}
+			}
+		}
+		return ($jsonasteroid);
 	}
 
 	public function fill_map ($player) {
@@ -88,7 +108,11 @@ Class Board {
 	}
 
 	public function __destruct() {
+		$_SESSION['board'] = serialize($this);
+	}
 
+	public function __wakeup() {
+		//print ('Map unserialize...' . PHP_EOL);
 	}
 
 }

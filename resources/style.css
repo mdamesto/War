@@ -18,6 +18,11 @@ html {
 	background-color:black;
 }
 
+.a {
+	background: url("https://www.colourbox.com/preview/11166070-abstract-seamless-moon-texture-6000x6000.jpg") no-repeat center center fixed;
+	background-size: cover;
+}
+
 .v {
 	background-color: red;
 }
