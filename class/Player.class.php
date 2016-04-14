@@ -15,7 +15,7 @@ Class Player {
 			if ($kwargs['fleetName'])
 				$this->fleetName = $kwargs['fleetName'];
 			else
-				$this->fleetName = $kwargs['playerName'] . ' fleet';
+				$this->fleetName = $kwargs['playerName'] . '\'s fleet';
 			$this->Fleet = new Fleet ( 
 				array ( 'fleetName' => $this->fleetName )
 			);

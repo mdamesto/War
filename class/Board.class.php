@@ -5,6 +5,7 @@ Class Board {
 	private $player1;
 	private $player2;
 	private $map;
+	private $current_map
 
 	public function __construct () {
 		$this->player1 = New Player ( array (
@@ -42,7 +43,7 @@ Class Board {
 
 	public function recruit ($player, $shipType, $shipName) {
 		if ($player == 1) {
-			$ret = $this->player1->getAtt('Fleet')->recruit($shipType, $shipName);
+			$this->player1->getAtt('Fleet')->recruit($shipType, $shipName);
 			print (' of ' . $this->player1->getAtt('playerName') . PHP_EOL);
 		}
 		if ($player == 2) {
@@ -96,6 +97,18 @@ Class Board {
 			$this->player2->getAtt('Fleet')->getAtt('fleet')[$shipNmb]->orient($orient);
 		}
 	}
+
+	public function add_meteor($x, $y , $size) {
+		print("===============================");
+		$i = -1;
+		while (++$i < $size)
+		{
+			$j = -1;
+			while (++$j < $size)
+				$this->map[$y+$i][$x+$j] = 'X';
+		}
+	}
+
 
 	public function init_map() {
 		$i = -1;

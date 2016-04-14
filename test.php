@@ -14,6 +14,9 @@ include_once ('trait/Moove.trait.php');
 print ("\n\nBOARD CREATION-----------------\n\n");
 $board = new Board ();
 
+$board->add_meteor(50, 50, 20);
+$board->add_meteor(100, 20, 10);
+$board->add_meteor(10, 10, 5);
 
 print ("\n\nRECRUITING----------------------\n\n");
 $board->recruit(1, "ImperialDestroyer", "OVER OF THE STARDEATH");	
