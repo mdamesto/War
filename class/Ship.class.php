@@ -23,7 +23,7 @@ abstract class				Ship
 	protected				$_state;			//	Current mobility state
 	protected				$_format = "Ship( type: %s, name: %s, sprite: %s, size: %s, center: %s, direction: %s, PV: %d, PP: %d, speed: %d, maneuvrability: %d, weapons[%d]: %s)";
 
-	abstract function		fire(array);
+	abstract function		fire($target);
 
 	protected function		resetPP()
 	{
