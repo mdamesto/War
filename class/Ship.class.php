@@ -71,6 +71,11 @@ abstract class				Ship
 			return file_get_contents('Ship.doc.txt');
 	}
 
+	public function			getId();
+	{
+		return $this->_id;
+	}
+
 	public function			getOwner()
 	{
 		return $this->_owner;
