@@ -60,7 +60,7 @@ $board->getShips();
 print ("\n\nMAP----------------------------\n\n");
 $board->print_map();
 
-print_r($board->sendAsteroid());
+//print_r($board->sendAsteroid());
 
 
 echo "\n---BABAILLE---\n\n";

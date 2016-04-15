@@ -210,7 +210,6 @@ abstract class				Ship
 		$xMax = $this->_position['x'] + $offX;
 		$yMax = $this->_position['y'] + $offY;
 
-		print("toto" . PHP_EOL);
 		for ($i = $y; $i <= $yMax; $i++)
 		{
 			for ($j = $x; $j <= $xMax; $j++)

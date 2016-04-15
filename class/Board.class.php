@@ -56,14 +56,13 @@ Class Board {
 	{
 		foreach ($pos as $k)
 		{
-			if ($k['x'] > 0 && $k['x'] < $this->width &&
-					$k['y'] > 0 && $k['y'] < $this->height)
-				{
-						if ($this->map[$k['x']][$k['y']] != 0)
-						{
-							return False;
-						}
-				}
+			if ($k['x'] < 0 || $k['x'] >= $this->width ||
+					$k['y'] < 0 || $k['y'] >= $this->height)
+					return (False);
+			if ($this->map[$k['x']][$k['y']] != 0)
+			{
+				return False;
+			}
 		}
 		return True;
 	}
@@ -77,7 +76,7 @@ Class Board {
 				$x = 0;
 				$y = 0;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace()))
+				while(!$this->checkPos($ship->getSpace(False)))
 				{
 					$x++;
 					if ($x >= $this->width)
@@ -87,6 +86,7 @@ Class Board {
 					}
 					$ship->setPosition(array('x' => $x, 'y'=> $y));
 				}
+				$tab = $ship->getSpace(True);
 			}
 
 			if ($ship->getOwner() == 2)
@@ -94,7 +94,7 @@ Class Board {
 				$x = $this->width;
 				$y = $this->height;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace($x)))
+				while(!$this->checkPos($ship->getSpace(False)))
 				{
 					$x--;
 					if ($x <= 0)
@@ -105,12 +105,13 @@ Class Board {
 					$ship->setPosition(array('x' => $x, 'y'=> $y));
 				}
 			}
+			$tab = $ship->getSpace(True);
+			foreach ($tab as $c)
+			{
+				$this->map[$c['x']][$c['y']] = $ship->getId();
+			}
 		}
-
-		foreach ($this->ships as $key => $ship)
-		{
-			var_dump($ship);
-		}
+		
 	}
 
 	public function sendAsteroid()
@@ -129,10 +130,10 @@ Class Board {
 
 	public function print_map() {
 		$i = -1;
-		while (++$i < $this->width) {
+		while (++$i < $this->height) {
 			$j = -1;
-			while (++$j < $this->height) {
-				print ($this->map[$i][$j]);
+			while (++$j < $this->width) {
+				print ($this->map[$j][$i]);
 			}
 			print (PHP_EOL);
 		}
