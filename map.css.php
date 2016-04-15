@@ -6,9 +6,10 @@ if (isset($_SESSION['board']))
   $board = unserialize($_SESSION['board']);
   $screen = $board->getSize();
 
-  $size = 10;
-  $width = 100;
-  $height = 80;
+
+  $size = 8;
+  $width = $screen['x'];
+  $height = $screen['y'];
 
   echo "
   .case {

@@ -4,12 +4,16 @@ if (isset($_SESSION['board']))
 {
   $board = unserialize($_SESSION['board']);
   $size = $board->getSize();
+
+
+  //var_dump($board);
 ?>
 <!DOCTYPE html>
 <html>
   <head>
     <title>Title of the document</title>
     <link rel="stylesheet" type="text/css" href="./resources/style.css">
+    <link rel="stylesheet" type="text/css" href="./resources/stars.css">
     <link rel="stylesheet" type="text/css" href="./map.css.php">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
   </head>
@@ -25,16 +29,8 @@ if (isset($_SESSION['board']))
   }
 ?>
 </div>
-<div class="panel">
-  <div class="sub-panel">
-    PP
-  </div>
-  <div class="sub-panel">
-    Movement
-  </div>
-  <div class="sub-panel">
-    Attack
-  </div>
+<div id="panel" class="panel">
+
 </div>
 <script src="./resources/ajax.js"></script>
 </body>

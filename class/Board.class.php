@@ -23,8 +23,8 @@ Class Board {
 				'playerName' => 'Gus',
 				'fleetName' => 'Tibers Chaos'
 			));
-			$this->width = 100;
-			$this->height = 80;
+			$this->width = 150;
+			$this->height = 100;
 			$this->init_map();
 		}
 			print ("BOARD CREATED" . PHP_EOL);
@@ -43,6 +43,11 @@ Class Board {
 	public function getPlayer2()
 	{
 		return ($this->player2);
+	}
+
+	public function getMap($x, $y)
+	{
+		return $this->map[$x][$y];
 	}
 
 	public function getShips()
@@ -114,10 +119,10 @@ Class Board {
 				$this->map[$c['x']][$c['y']] = $ship->getId();
 			}
 		}
-		
+
 	}
 
-	private function getShipById($id)
+	public function getShipById($id)
 	{
 		foreach($this->ships as $ship)
 		{
