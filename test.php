@@ -1,10 +1,9 @@
 <?php
 require_once("./include.php");
-
+session_destroy();
 if (isset($_SESSION['board']))
 {
   $board = unserialize($_SESSION['board']);
-  print_r($board);
 }
 else {
   $board = new Board ();
@@ -13,8 +12,19 @@ else {
 
 
 
-$board->add_meteor(75, 10, 3);
-$board->add_meteor(35, 45, 7);
+//$board->add_meteor(55, 10, 9);
+//$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,8));
+
+
+
+
+$board->addShip(new ImperialDestroyer(1));
+$board->addShip(new ImperialDestroyer(1));
+$board->addShip(new ImperialDestroyer(2));
+$board->addShip(new ImperialDestroyer(2));
+
+$board->placeShip();
+
 
 
 /*
