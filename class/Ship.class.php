@@ -143,7 +143,9 @@ abstract class				Ship
 
 	public function			setPosition($position)
 	{
-		$this->_position = array('x' => $position['x'], 'y' => $position['y'], 'dir' => $position['dir']);
+		if (isset($position['dir']))
+			$this->_position['dir'] = $position['dir'];
+		$this->_position = array('x' => $position['x'], 'y' => $position['y']);
 	}
 
 	public function			active()
