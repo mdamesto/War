@@ -19,11 +19,4 @@ function toto()
       $('.case_'+val.x+'_'+val.y).addClass('a');
     });
   });
-
-  $.getJSON( "./server.php?get=asteroid", function( data ) {
-    var items = [];
-    $.each( data, function( key, val ) {
-      $('.case_'+val.x+'_'+val.y).addClass('a');
-    });
-  });
 }

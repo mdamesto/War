@@ -17,6 +17,12 @@ class				ImperialDestroyer extends Ship
 		$this->_weapons[] = clone $weapon;
 		parent::__construct($owner);
 	}
+
+	public function	fire($target)
+	{
+		if ($target[0]->hearted(5) === TRUE) //	D6
+			return TRUE;
+	}
 }
 
 ?>
