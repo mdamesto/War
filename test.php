@@ -58,7 +58,7 @@ $board->getShips();
 print ("\n\nMAP----------------------------\n\n");
 $board->print_map();
 
-//print ($board->doc() . "LOL");
+print ($board->doc() . "LOL");
 //print_r($board->sendAsteroid());
 
 /*$shipToMove = $board->getShipById(3);

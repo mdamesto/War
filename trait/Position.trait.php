@@ -36,9 +36,6 @@ trait Position {
 		$offL = ($this->_size['L'] - 1) / 2;
 		if ($when == 'old' )
 		{
-			echo ("YEAHHHHHHHH");
-			print ($this->_oldPosition['dir'] . PHP_EOL);
-			print ($this->_position['dir'] . PHP_EOL);
 			$offX = (($this->_oldPosition['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
 			$offY = (($this->_oldPosition['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
 			$x = $this->_oldPosition['x'] - $offX;
@@ -48,9 +45,6 @@ trait Position {
 		}
 		else
 		{
-			echo ("YEAHHHHHHHH");
-			print ($this->_oldPosition['dir'] . PHP_EOL);
-			print ($this->_position['dir'] . PHP_EOL);
 			$offX = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
 			$offY = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
 			$x = $this->_position['x'] - $offX;

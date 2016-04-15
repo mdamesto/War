@@ -1,0 +1,12 @@
+<- Ship ----------------------------------------------------------------------
+The Ship class handles Everything about ships.
+
+The class provides the following trait :
+
+trait Figth
+trait Move
+trait Position
+trait Power
+
+
+---------------------------------------------------------------------- Ship ->

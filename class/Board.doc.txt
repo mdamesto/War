@@ -24,4 +24,4 @@ print map into the console
 Board add_meteor
 add a asteroid to the map param(position x, position y, size)
 
----------------------------------------------------------------------- Color ->
+---------------------------------------------------------------------- Board ->

@@ -1,0 +1,9 @@
+<- Weapon ----------------------------------------------------------------------
+The Weapon class handles Player Fleet and Map.
+
+The class provides the following methods :
+
+Weapon getShootableAera
+//TO CONTINUE
+
+---------------------------------------------------------------------- Weapon ->

@@ -34,10 +34,9 @@ Class Board implements General{
 
 	public static function	doc()
 	{
-		if (file_exists('./Board.doc.txt'))
+		if (file_exists('./class/Board.doc.txt'))
 		{
-			print ("WHAT" . PHP_EOL);
-			return file_get_contents('./Board.doc.txt');
+			return file_get_contents('./class/Board.doc.txt');
 		}
 	}
 
