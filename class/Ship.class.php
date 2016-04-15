@@ -3,7 +3,7 @@
 abstract class				Ship
 {
 	public static			$verbose = FALSE;
-	static protected		$_idCount;
+	static protected		$_idCount = 0;
 	protected				$_id;
 	protected				$_owner;			//	Player 1 || 2
 	protected				$_name;				//	Badass Name
@@ -38,7 +38,8 @@ abstract class				Ship
 	{
 		if (self::$verbose === TRUE)
 			print($this . " constructed." . PHP_EOL);
-		$this->_id = self::$_idCount++;
+		self::$_idCount += 1;
+		$this->_id = self::$_idCount;
 		$this->_owner = $owner;
 		$this->_state = "motionless";
 		$this->_position['dir'] = (($owner === 1) ? 'N' : 'S');
@@ -71,7 +72,7 @@ abstract class				Ship
 			return file_get_contents('Ship.doc.txt');
 	}
 
-	public function			getId();
+	public function			getId()
 	{
 		return $this->_id;
 	}
