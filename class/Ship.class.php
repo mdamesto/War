@@ -143,7 +143,9 @@ abstract class				Ship
 
 	public function			setPosition($position)
 	{
-		$this->_position = array('x' => $position['x'], 'y' => $position['y'], 'dir' => $position['dir']);
+		if (isset($position['dir']))
+			$this->_position['dir'] = $position['dir'];
+		$this->_position = array('x' => $position['x'], 'y' => $position['y']);
 	}
 
 	public function			active()
@@ -183,7 +185,7 @@ abstract class				Ship
 		return $this->_PsPp;
 	}
 
-	public function			getSpace($position, $physical = FALSE)
+	public function			getSpace($physical = FALSE)
 	{
 		$offX = ($this->_size['x'] - 1) / 2;
 		$offY = ($this->_size['y'] - 1) / 2;
@@ -192,10 +194,10 @@ abstract class				Ship
 			$offX += $this->_weapons[0]->getShootAera()['near'];
 			$offY += $this->_weapons[0]->getShootAera()['near'];
 		}
-		$x = $position['x'] - $offX;
-		$y = $position['y'] - $offY;
-		$xMax = $position['x'] + $offX;
-		$yMax = $position['y'] + $offY;
+		$x = $this->_position['x'] - $offX;
+		$y = $this->_position['y'] - $offY;
+		$xMax = $this->_position['x'] + $offX;
+		$yMax = $This->_position['y'] + $offY;
 
 		print("toto" . PHP_EOL);
 		for ($i = $y; $i <= $yMax; $i++)

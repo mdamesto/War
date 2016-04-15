@@ -12,9 +12,9 @@ require_once("include.php");
 <body>
 <div class="plateau">
 <?php
-  for ($x = 1;$x <100; $x++)
+  for ($x = 1;$x <=150; $x++)
   {
-    for ($y = 1;$y <80; $y++)
+    for ($y = 1;$y <=100; $y++)
     {
       echo '<div class="case case_'.$x.'_'.$y.'"></div>';
     }

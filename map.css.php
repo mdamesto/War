@@ -16,9 +16,9 @@ height : ".$size*$height."px;
 }
 
 ";
-for($x = 0; $x < 100; $x++)
+for($x = 1; $x <= 150; $x++)
 {
-  for($y = 0; $y < 80; $y++)
+  for($y = 1; $y <= 100; $y++)
   {
     echo "
     .case_".$x."_".$y." {

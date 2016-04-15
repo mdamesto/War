@@ -8,6 +8,7 @@ function toto()
     var items = [];
     $.each( data, function( key, val ) {
       $('.case_'+val.pos.x+'_'+val.pos.y).addClass('v').click(function( event ) {
+        //event
       });
     });
   });
