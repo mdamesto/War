@@ -6,6 +6,8 @@ Class Board {
 	private $player2;
 	private $map;
 	private $ships;
+	private $width;
+	private $height;
 
 	public function __construct () {
 
@@ -21,7 +23,11 @@ Class Board {
 				'playerName' => 'Gus',
 				'fleetName' => 'Tibers Chaos'
 			));
+			$this->width = 100;
+			$this->height = 80;
 			$this->init_map();
+
+
 		}
 			print ("BOARD CREATED" . PHP_EOL);
 	}
@@ -41,12 +47,74 @@ Class Board {
 		return ($this->ships);
 	}
 
+	public function addShip(Ship $ship)
+	{
+		$this->ship[] = $ship;
+	}
+
+	private function checkPos(Array $pos)
+	{
+		foreach ($pos as $k)
+		{
+			if ($this->map[$k['x']][$k['y']] != 0)
+			{
+				return False;
+			}
+		}
+		return True;
+	}
+
+	public function placeShip()
+	{
+		foreach ($this->ships as $key => $ship)
+		{
+			if ($ship->getOwner() == 1)
+			{
+				$x = 0;
+				$y = 0;
+				$ship->setPosition(array('x' => $x, 'y'=> $y));
+				while(!$this->checkPos($ship->getSpace($x)))
+				{
+					$x++;
+					if ($x >= $this->width)
+					{
+						$x=0;
+						$y++;
+					}
+					$ship->setPosition(array('x' => $x, 'y'=> $y));
+				}
+			}
+
+			if ($ship->getOwner() == 2)
+			{
+				$x = $this->width;
+				$y = $this->height;
+				$ship->setPosition(array('x' => $x, 'y'=> $y));
+				while(!$this->checkPos($ship->getSpace($x)))
+				{
+					$x--;
+					if ($x <= 0)
+					{
+						$x=$this->width;
+						$y--;
+					}
+					$ship->setPosition(array('x' => $x, 'y'=> $y));
+				}
+			}
+		}
+
+		foreach ($this->ships as $key => $ship)
+		{
+			var_dump($ship);
+		}
+	}
+
 	public function sendAsteroid()
 	{
 		$jsonasteroid = array();
-		for ( $i = 0;$i< 99; $i++) {
-			for ($j = 0;$j < 99; $j++) {
-				if ($this->map[$i][$j] == "X")
+		for ( $i = 0;$i< $this->width; $i++) {
+			for ($j = 0;$j < $this->height ; $j++) {
+				if ($this->map[$i][$j] == "-1")
 				{
 					$jsonasteroid[]= array('x' => $i, 'y' => $j);
 				}
@@ -55,26 +123,11 @@ Class Board {
 		return ($jsonasteroid);
 	}
 
-	public function fill_map ($player) {
-		if ($player == 1) {
-			$i = -1;
-			while ($this->map[0][++$i] != '.')
-				;
-			$this->map[0][$i] = 2;
-		}
-		if ($player == 2) {
-			$i = 150;
-			while ($this->map[99][--$i] != '.')
-				;
-			$this->map[99][$i] = 2;
-		}
-	}
-
 	public function print_map() {
 		$i = -1;
-		while (++$i < 100) {
+		while (++$i < $this->width) {
 			$j = -1;
-			while (++$j < 150) {
+			while (++$j < $this->height) {
 				print ($this->map[$i][$j]);
 			}
 			print (PHP_EOL);
@@ -89,7 +142,7 @@ Class Board {
 		    if ($i*$i + $j*$j > $size * $size) {
 
 		    } else {
-		        $this->map[$i+$x][$j+$y] = "X";
+		        $this->map[$i+$x][$j+$y] = "-1";
 		    }
 			}
     }
@@ -98,10 +151,10 @@ Class Board {
 
 	public function init_map() {
 		$i = -1;
-		while (++$i < 100) {
+		while (++$i < $this->width) {
 			$j = -1;
-			while (++$j < 150) {
-				$this->map[$i][$j] = '.';
+			while (++$j < $this->height) {
+				$this->map[$i][$j] = '0';
 			}
 		}
 		print ('Map initialized...' . PHP_EOL);
