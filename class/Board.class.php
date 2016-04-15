@@ -49,17 +49,21 @@ Class Board {
 
 	public function addShip(Ship $ship)
 	{
-		$this->ship[] = $ship;
+		$this->ships[] = $ship;
 	}
 
 	private function checkPos(Array $pos)
 	{
 		foreach ($pos as $k)
 		{
-			if ($this->map[$k['x']][$k['y']] != 0)
-			{
-				return False;
-			}
+			if ($k['x'] > 0 && $k['x'] < $this->width &&
+					$k['y'] > 0 && $k['y'] < $this->height)
+				{
+						if ($this->map[$k['x']][$k['y']] != 0)
+						{
+							return False;
+						}
+				}
 		}
 		return True;
 	}
@@ -73,7 +77,7 @@ Class Board {
 				$x = 0;
 				$y = 0;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace($x)))
+				while(!$this->checkPos($ship->getSpace()))
 				{
 					$x++;
 					if ($x >= $this->width)
