@@ -4,8 +4,8 @@ abstract class				Weapon
 {
 	public static			$verbose = FALSE;
 	protected				$_name;
-	protected				$_chargeStrict;
-	protected				$_chargePP;
+	protected				$_chargeInit;
+	protected				$_charge;
 	protected				$_shootAera;
 	protected				$_shootType;
 	protected				$_format = "Weapon( type: %s, name: %s, charge: %d,  Near: %d, Middle: %d, Far: %d )";
@@ -16,7 +16,7 @@ abstract class				Weapon
 	{
 		if (self::$verbose === TRUE)
 			print($this . " constructed." . PHP_EOL);
-		$this->reset_chargePP();;
+		$this->reset();;
 	}
 
 	public function			__destruct()
@@ -27,7 +27,7 @@ abstract class				Weapon
 
 	public function			__toString()
 	{
-		return sprintf($this->_format, get_class($this), $this->_name, $this->_chargeStrict, $this->_shootAera['near'], $this->_shootAera['middle'], $this->_shootAera['far']);
+		return ;
 	}
 
 	public static function	doc()
@@ -56,17 +56,17 @@ abstract class				Weapon
 		$this->_chargePP += $PP;
 	}
 
-	public function			getTotalCharge()
+	public function			getCharge()
 	{
-		return $this->_chargeStrict + $this->_chargePP;
+		return $this->_charge;
 	}
 
-	public function			reset_chargePP()
+	public function			reset()
 	{
-		$this->_chargePP = $this->_chargeStrict;
+		$this->_charge = $this->_chargeInit;
 	}
 
-	public function			getShootableAera($position, $size)	// $size['x'] always refer to E<->W size and $size['y'] to N<->S size..
+	public function			getShootableAera($position, $size)
 	{
 		$offl = ($size['l'] - 1) / 2;
 		$offL = ($size['L'] - 1) / 2;

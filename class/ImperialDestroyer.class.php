@@ -6,12 +6,13 @@ class				ImperialDestroyer extends Ship
 	{
 		$this->_name = "Sword Of Absolution";
 		$this->_spriteSrc = "img/sprite/ImperialDestroyer.jpg";
-		$this->_size['L'] = 3; // 7
-		$this->_size['l'] = 1; // 3
-		$this->_maneuvrability = 3;
-		$this->_speed = 18;
-		$this->_PpMax = 10;
-		$this->_PvMax = 4;
+		$this->_size['L'] = 3;
+		$this->_size['l'] = 1;
+		$this->_maneuvreInit = 3;
+		$this->_speedInit = 18;
+		$this->_PpInit = 10;
+		$this->_PvInit = 4;
+		$this->_PsInit = 0;
 		$weapon = new HeavyMachineGun();
 		$this->_weapons[] = $weapon;
 		$this->_weapons[] = clone $weapon;

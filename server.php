@@ -109,6 +109,10 @@ if (isset($_SESSION['board']))
   }
   if (isset($_GET['action']) && $_GET['action'] == "btn")
   {
+
+		while ($this->tryMove($_GET['id'], $_GET['nb']) === FALSE)
+			echo "Can't move like this!";
+	
           //$this->run($_GET['nb']);
           echo $_GET['id'];
           echo $_GET['nb'];

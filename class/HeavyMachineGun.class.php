@@ -6,9 +6,7 @@ class				HeavyMachineGun extends Weapon
 	{
 		$this->_name = "Heavy Machine Gun";
 		$this->_charge = 0;
-		$this->_shootAera['near'] = 3;
-		$this->_shootAera['middle'] = 7;
-		$this->_shootAera['far'] = 10;
+		$this->_shootAera = array('near' => 3, 'middle' => 7, 'far' => 10);
 		$this->_shootType = array('traverse' => FALSE, 'zone' => FALSE);
 		parent::__construct();
 	}

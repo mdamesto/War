@@ -8,10 +8,11 @@ class				ImperialCruiser extends Ship
 		$this->_spriteSrc = "img/sprite/ImperialDestroyer.jpg";
 		$this->_size['L'] = 7; // 7
 		$this->_size['l'] = 3; // 3
-		$this->_maneuvrability = 5;
-		$this->_speed = 16;
-		$this->_PpMax = 15;
-		$this->_PvMax = 10;
+		$this->_maneuvreInit = 5;
+		$this->_speedInit = 16;
+		$this->_PpInit = 15;
+		$this->_PvInit = 10;
+		$this->_PsInit = 0;
 		$weapon = new HeavyMachineGun();
 		$this->_weapons[] = $weapon;
 		$this->_weapons[] = clone $weapon;
