@@ -1,7 +1,18 @@
 <?PHP
 
-abstract class				Ship
-{
+require_once ("./trait/Move.trait.php");
+require_once ("./trait/Power.trait.php");
+require_once ("./trait/Fight.trait.php");
+require_once ("./trait/Position.trait.php");
+require_once ("./interface/IGeneral.interface.php");
+
+abstract class				Ship implements General{
+	
+	use 					Move; 				//contain all moves method
+	use 					Power;				//contain all PP gestion method
+	use 					Fight;				//contain all fight gestion method
+	use 					Position;			//return Position? et other math/position stuff
+
 	public static			$verbose = FALSE;
 	static protected		$_idCount = 0;
 	protected				$_id;
@@ -10,6 +21,7 @@ abstract class				Ship
 	protected				$_spriteSrc;		//	Sprite Path
 	protected				$_actived;			//	Boolean TRUE is ever activated this tour
 	protected				$_position;			//	array('x' => Xcenter, 'y' => Ycenter, 'dir' => N || S || W || E)
+	protected				$_oldPosition;		//	array('x' => Xcenter, 'y' => Ycenter, 'dir' => N || S || W || E)
 	protected				$_size;				//	array('x' => largeur, 'y' => Longueur)
 	protected				$_maneuvreInit;		//	Carac
 	protected				$_speedInit;		//	Carac
@@ -27,17 +39,6 @@ abstract class				Ship
 	protected				$_state;			//	Current mobility state
 	protected				$_format = "Ship( type: %s, name: %s, sprite: %s, size: %s, center: %s, direction: %s, PV: %d, PP: %d, speed: %d, maneuvrability: %d, weapons[%d]: %s)";
 
-	abstract function		fire($target);
-
-	protected function		resetPP()
-	{
-		$this->_Pp = $this->_PpInit;
-		$this->_speed = $this->_speedInit;
-		$this->_Ps = $this->_PsInit;
-		foreach ($this->_weapons as $weapon)
-			$weapon->reset();
-	}
-
 	public function			__construct($owner)
 	{
 		if (self::$verbose === TRUE)
@@ -54,9 +55,10 @@ abstract class				Ship
 		$this->_maneuvre = $this->_maneuvreInit;
 		$this->_moved = 0;
 		if ($owner === 1)
-			$this->_position['dir'] = 'N';
-		else
 			$this->_position['dir'] = 'S';
+		else
+			$this->_position['dir'] = 'N';
+		$this->_oldPosition = $this->_position;
 		print("dir = " . $this->_position['dir'] . PHP_EOL);
 		$this->reset();
 	}
@@ -87,243 +89,19 @@ abstract class				Ship
 			return file_get_contents('Ship.doc.txt');
 	}
 
-	public function			getId()
-	{
-		return $this->_id;
+	public function getAtt( $_att ) {
+		return $this->$_att;
 	}
 
-	public function			getOwner()
-	{
-		return $this->_owner;
-	}
-
-	public function			getName()
-	{
-		return $this->_name;
-	}
-
-	public function			getSprite()
-	{
-		return $this->_spriteSrc;
-	}
-
-	public function			getSize()
-	{
-		return $this->_size;
-	}
-
-	public function			getPv()
-	{
-		return $this->_Pv;
-	}
-
-	public function			getPp()
-	{
-		return $this->_Pp;
-	}
-
-
-	public function			getPs()
-	{
-		return $this->_Ps;
-	}
-
-	public function			getSpeed()
-	{
-		return $this->_speed;
-	}
-
-	public function			getManeuvre()
-	{
-		return $this->_maneuvre;
-	}
-
-	public function			getWeapons()
-	{
-		return $this->_weapons;
-	}
-
-	public function			getActivated()
-	{
-		return $this->_activated;
-	}
-
-	public function			getPosition()
-	{
-		return $this->_position;
-	}
-
-	public function			setPosition($position)
-	{
-		if (isset($position['dir']))
-			$this->_position['dir'] = $position['dir'];
-		$this->_position['x'] = $position['x'];
-		$this->_position['y'] = $position['y'];
-	}
-
-	public function			active()
-	{
+	public function			active() {
 		$this->_actived = TRUE;
 	}
 
-	public function			repare()
-	{
-		if ($this->_Pp < 1)
-			return FALSE;
-		if ($this->_Pv < $this->_PvInit)	// D6
-			$this->_Pv += 1;
-		$this->_Pp -= 1;
-	}
-
-	public function			givePPshield($PP)
-	{
-		if ($PP > $this->_Pp)
-			return FALSE;
-		$this->_Pp -= $PP;
-		$this->_Ps += $PP;
-	}
-
-	public function			givePPspeed($PP)
-	{
-		if ($PP > $this->_Pp)
-			return FALSE;
-		$this->_Pp -= $PP;
-		$this->_speed += $PP;				//	D6
-	}
-
-	public function			getSpace($physical = FALSE)
-	{
-		$offl = ($this->_size['l'] - 1) / 2;
-		$offL = ($this->_size['L'] - 1) / 2;
-		if ($physical !== TRUE)
-		{
-			$offl += $this->_weapons[0]->getShootAera()['near'];
-			$offL += $this->_weapons[0]->getShootAera()['near'];
-		}
-		$offX = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
-		$offY = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
-		$x = $this->_position['x'] - $offX;
-		$y = $this->_position['y'] - $offY;
-		$xMax = $this->_position['x'] + $offX;
-		$yMax = $this->_position['y'] + $offY;
-
-		for ($i = $y; $i <= $yMax; $i++)
-		{
-			for ($j = $x; $j <= $xMax; $j++)
-				$aera[] = array('x' => $j, 'y' => $i);
-		}
-		return $aera;
-	}
-
-	public function			reset()
-	{
+	public function			reset() {
 		$this->_actived = FALSE;
 		$this->resetPP();
 		$this->_maneuvre = $this->_maneuvreInit;
 		$this->_moved = 0;
-	}
-
-	public function			hearted($damage)
-	{
-		if ($damage >= ($this->_Pv + $this->_Ps))
-			return TRUE;
-		if ($damage <= $this->_Ps)
-		{
-			$this->_Ps -= $damage;
-			return FALSE;
-		}
-		$damage -= $this->_Ps;
-		$this->_Ps = 0;
-		$this->_Pv -= $damage;
-		return FALSE;
-	}
-
-	protected function			_go($val)
-	{
-		print_r($this->_position);
-		switch ($this->_position['dir'])
-		{
-			case 'N':
-				$this->_position['y'] -= $val;
-				break ;
-			case 'S':
-				echo 'POS: ' . $this->_position['y'] . " VAL: " . $val . PHP_EOL;
-				$this->_position['y'] += $val;
-				break ;
-			case 'E':
-				$this->_position['x'] += $val;
-				break ;
-			case 'W':
-				$this->_position['x'] -= $val;
-				break ;
-		}
-		if ($this->_moved === 0)
-			$this->_state = 'motionless';
-		else
-			$this->_state = 'motion';
-		$this->_lastState = $this->_state;
-		print_r($this->_position);
-	}
-
-	protected function			_tryRun($val)
-	{
-		if ($val > $this->_speed)
-			$val = $this->_speed;
-		else if ($val < $this->_maneuvre)
-		{
-			$val = $this->_maneuvre;
-			$this->_maneuvre = 0;
-		}
-		else
-			$this->_maneuvre = 0;
-		$this->_speed -= $val;
-		$this->_moved += $val;
-		$this->_go($val);
-		return TRUE;
-	}
-
-	protected function			_tryStop($val)
-	{
-		if ($this->_lastState === 'motion' AND $this->_maneuvre > 0)
-			$this->_go($this->_maneuvre);
-		return TRUE;
-	}
-
-	protected function			_tryLeft($val)
-	{
-		return FALSE;
-	}
-
-	protected function			_tryRight($val)
-	{
-		return FALSE;
-	}
-
-	protected function			_noMove($val)
-	{
-		if ($this->_lastState === 'motion' AND $this->_maneuvre > 0)
-			$this->_go($this->_maneuvre);
-		return TRUE;
-	}
-
-	public function				tryMove($id, $val)
-	{
-		if ($this->_speed === 0)
-			return FALSE;
-		switch ($id)
-		{
-			case 'run':
-				return $this->_tryRun($val);
-			case 'stop':
-				return $this->_tryStop($val);
-			case 'turnLeft':
-				return $this->_tryLeft($val);
-			case 'turnRight':
-				return $this->_tryRight($val);
-			case 'next':
-				return $this->_noMove($val);
-		}
-		return FALSE;
 	}
 
 }

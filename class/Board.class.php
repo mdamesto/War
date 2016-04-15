@@ -1,6 +1,8 @@
 <?php
 
-Class Board {
+require_once ("./interface/IGeneral.interface.php");
+
+Class Board implements General{
 
 	private $player1;
 	private $player2;
@@ -30,29 +32,13 @@ Class Board {
 			print ("BOARD CREATED" . PHP_EOL);
 	}
 
-	public function getSize()
+	public static function	doc()
 	{
-		return (array('x'=>$this->width, 'y'=>$this->height));
-	}
-
-	public function getPlayer1()
-	{
-		return ($this->player1);
-	}
-
-	public function getPlayer2()
-	{
-		return ($this->player2);
-	}
-
-	public function getMap($x, $y)
-	{
-		return $this->map[$x][$y];
-	}
-
-	public function getShips()
-	{
-		return ($this->ships);
+		if (file_exists('./Board.doc.txt'))
+		{
+			print ("WHAT" . PHP_EOL);
+			return file_get_contents('./Board.doc.txt');
+		}
 	}
 
 	public function addShip(Ship $ship)
@@ -75,20 +61,18 @@ Class Board {
 		return True;
 	}
 
-	public function placeShip()
+	public function placeShips()
 	{
 		foreach ($this->ships as $key => $ship)
 		{
-			if ($ship->getOwner() == 1)
+			if ($ship->getAtt('_owner') == 1)
 			{
 				$x = 0;
 				$y = 0;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace(False)))
-				{
+				while(!$this->checkPos($ship->getSpace(False))) {
 					$x++;
-					if ($x >= $this->width)
-					{
+					if ($x >= $this->width) {
 						$x=0;
 						$y++;
 					}
@@ -97,7 +81,7 @@ Class Board {
 				$tab = $ship->getSpace(True);
 			}
 
-			if ($ship->getOwner() == 2)
+			if ($ship->getAtt('_owner') == 2)
 			{
 				$x = $this->width;
 				$y = $this->height;
@@ -116,17 +100,31 @@ Class Board {
 			$tab = $ship->getSpace(True);
 			foreach ($tab as $c)
 			{
-				$this->map[$c['x']][$c['y']] = $ship->getId();
+				$this->map[$c['x']][$c['y']] = $ship->getAtt('_id');
 			}
 		}
 
+	}
+
+	public function replaceShip($ship)
+	{
+		$tab = $ship->getFlatSpace('old');
+		foreach ($tab as $c)
+		{
+			$this->map[$c['x']][$c['y']] = 0;
+		}
+		$tab = $ship->getFlatSpace('new');
+		foreach ($tab as $c)
+		{
+			$this->map[$c['x']][$c['y']] = $ship->getAtt('_id');
+		}
 	}
 
 	public function getShipById($id)
 	{
 		foreach($this->ships as $ship)
 		{
-			if ($ship->getId() == $id)
+			if ($ship->getAtt('_id') == $id)
 				return ($ship);
 		}
 	}
@@ -139,12 +137,13 @@ Class Board {
 				if ($this->map[$i][$j] > 0)
 				{
 					$ship = $this->getShipById($this->map[$i][$j]);
-					$jsonships[]= array('x' => $i, 'y' => $j, 'id' => $ship->getId(), 'owner' => $ship->getOwner());
+					$jsonships[]= array('x' => $i, 'y' => $j, 'id' => $ship->getAtt('_id'), 'owner' => $ship->getAtt('_owner'));
 				}
 			}
 		}
 		return ($jsonships);
 	}
+
 
 	public function sendAsteroid()
 	{
@@ -199,6 +198,31 @@ Class Board {
 
 	public function __destruct() {
 		$_SESSION['board'] = serialize($this);
+	}
+
+	public function getSize()
+	{
+		return (array('x'=>$this->width, 'y'=>$this->height));
+	}
+
+	public function getPlayer1()
+	{
+		return ($this->player1);
+	}
+
+	public function getPlayer2()
+	{
+		return ($this->player2);
+	}
+
+	public function getMap($x, $y)
+	{
+		return $this->map[$x][$y];
+	}
+
+	public function getShips()
+	{
+		return ($this->ships);
 	}
 }
 

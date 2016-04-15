@@ -25,7 +25,7 @@ if (isset($_SESSION['board']))
 
     foreach($board->getShips() as $ship)
     {
-        print_r($ship->getPosition());
+        print_r($ship->getAtt('_position'));
     }
 
     $idShip = $board->getMap($case['x'],$case['y']);
@@ -35,13 +35,13 @@ if (isset($_SESSION['board']))
 ?>
         <div class="sub-panel">
           <div class="sub-panel-head">
-            Order <?php echo $ship->getName(); ?>
+            Order <?php echo $ship->getAtt('_name'); ?>
           </div>
           <div style="display:flex;">
-            <div class="viewer " id="PPleft">PP dispo:<?php echo $ship->getPp(); ?></div>
-            <div class="viewer btn-rouge panel-btn" id="PVleft">PV restant:<?php echo $ship->getPv(); ?></div>
+            <div class="viewer " id="PPleft">PP dispo:<?php echo $ship->getAtt('_Pp'); ?></div>
+            <div class="viewer btn-rouge panel-btn" id="PVleft">PV restant:<?php echo $ship->getAtt('_Pv'); ?></div>
             <div class="viewer btn-rouge panel-btn" id="Shield">Shield Value</div>
-            <div class="viewer btn-rouge panel-btn" id="Speed">Speed Value:<?php echo $ship->getSpeed(); ?></div>
+            <div class="viewer btn-rouge panel-btn" id="Speed">Speed Value:<?php echo $ship->getAtt('_speed'); ?></div>
           </div>
           <div style="display:flex;">
             <div class="viewer btn-rouge panel-btn">Next</div>
@@ -55,7 +55,7 @@ if (isset($_SESSION['board']))
             Movement
           </div>
           <div style="display:flex;">
-            <div class="viewer panel-btn" id="Vitesse">Manoeuvre:<?php echo $ship->getManeuvre(); ?></div>
+            <div class="viewer panel-btn" id="Vitesse">Manoeuvre:<?php echo $ship->getAtt('_maneuvre'); ?></div>
             <div class="viewer panel-btn" id="PVleft"></div>
             <div class="viewer" id="Shield"><input type="text" id="nb"></div>
             <div class="viewer panel-btn" id="Speed">Speed Value</div>
@@ -83,10 +83,13 @@ if (isset($_SESSION['board']))
 
           //while (
           echo $ship->tryMove($_GET['id'], $_GET['nb']); //=== FALSE)
+          $board->replaceShip($ship);
+          
 //			echo "Can't move like this!";
           //$this->run($_GET['nb']);
           echo $_GET['id'];
           echo $_GET['nb'];
+          $board->print_map();
   }
 
 

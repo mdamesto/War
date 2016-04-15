@@ -1,9 +1,7 @@
 <?PHP
 
-class				ImperialCruiser extends Ship
-{
-	public function	__construct($owner)
-	{
+class				ImperialCruiser extends Ship {
+	public function	__construct($owner) {
 		$this->_name = "Sword Of Demolition";
 		$this->_spriteSrc = "img/sprite/ImperialDestroyer.jpg";
 		$this->_size['L'] = 7; // 7

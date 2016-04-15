@@ -22,8 +22,7 @@ $board->addShip(new ImperialCruiser(1));
 $board->addShip(new ImperialCruiser(2));
 $board->addShip(new ImperialDestroyer(2));
 
-$board->placeShip();
-
+$board->placeShips();
 
 
 /*
@@ -59,8 +58,13 @@ $board->getShips();
 print ("\n\nMAP----------------------------\n\n");
 $board->print_map();
 
+//print ($board->doc() . "LOL");
 //print_r($board->sendAsteroid());
 
+/*$shipToMove = $board->getShipById(3);
+$shipToMove->_go(15);
+$board->replaceShip($shipToMove);
+$board->print_map();*/
 
 echo "\n---BABAILLE---\n\n";
 
