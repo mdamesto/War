@@ -3,6 +3,8 @@
 abstract class				Ship
 {
 	public static			$verbose = FALSE;
+	static protected		$_idCount;
+	protected				$_id;
 	protected				$_owner;			//	Player 1 || 2
 	protected				$_name;				//	Badass Name
 	protected				$_spriteSrc;		//	Sprite Path
@@ -21,6 +23,8 @@ abstract class				Ship
 	protected				$_state;			//	Current mobility state
 	protected				$_format = "Ship( type: %s, name: %s, sprite: %s, size: %s, center: %s, direction: %s, PV: %d, PP: %d, speed: %d, maneuvrability: %d, weapons[%d]: %s)";
 
+	abstract function		fire(array);
+
 	protected function		resetPP()
 	{
 		$this->_PpCurr = $this->_PpMax;
@@ -34,6 +38,7 @@ abstract class				Ship
 	{
 		if (self::$verbose === TRUE)
 			print($this . " constructed." . PHP_EOL);
+		$this->_id = self::$_idCount++;
 		$this->_owner = $owner;
 		$this->_state = "motionless";
 		$this->_position['dir'] = (($owner === 1) ? 'N' : 'S');
@@ -197,7 +202,7 @@ abstract class				Ship
 		$x = $this->_position['x'] - $offX;
 		$y = $this->_position['y'] - $offY;
 		$xMax = $this->_position['x'] + $offX;
-		$yMax = $This->_position['y'] + $offY;
+		$yMax = $this->_position['y'] + $offY;
 
 		print("toto" . PHP_EOL);
 		for ($i = $y; $i <= $yMax; $i++)
