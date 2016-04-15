@@ -66,10 +66,12 @@ abstract class				Weapon
 		$this->_chargePP = $this->_chargeStrict;
 	}
 
-	public function			getShootableAera($center, $size)	// $size['x'] always refer to E<->W size and $size['y'] to N<->S size..
+	public function			getShootableAera($position, $size)	// $size['x'] always refer to E<->W size and $size['y'] to N<->S size..
 	{
-		$offShipX = ($size['x'] - 1) / 2;
-		$offShipY = ($size['y'] - 1) / 2;
+		$offl = ($size['l'] - 1) / 2;
+		$offL = ($size['L'] - 1) / 2;
+		$offShipX = (($position['dir'] === 'N' OR $position['dir'] === 'S') ? $offl : $offL);
+		$offShipY = (($position['dir'] === 'N' OR $position['dir'] === 'S') ? $offL : $offl);
 
 		$offNearX = $offShipX + $this->_shootAera['near'];
 		$offNearY = $offShipY + $this->_shootAera['near'];
@@ -80,15 +82,10 @@ abstract class				Weapon
 		$offFarX = $offShipX + $this->_shootAera['far'];
 		$offFarY = $offShipY + $this->_shootAera['far'];
 
-		$x_cp = $center['x'] - ($offFarX + 1);
-		$y = $center['y'] - ($offFarY + 1);
-		$xMax = $center['x'] + $offFarX;
-		$yMax = $center['y'] + $offFarY;
-
-		print("x = " . $x_cp . PHP_EOL);
-		print("y = " . $y . PHP_EOL);
-		print("xMax = " . $xMax . PHP_EOL);
-		print("xMax = " . $xMax . PHP_EOL);
+		$x_cp = $position['x'] - ($offFarX + 1);
+		$y = $position['y'] - ($offFarY + 1);
+		$xMax = $position['x'] + $offFarX;
+		$yMax = $position['y'] + $offFarY;
 
 		while (++$y <= $yMax)
 		{
@@ -99,11 +96,11 @@ abstract class				Weapon
 			{
 				if ($x < 0)
 					continue ;
-				if (($x > ($center['x'] + $offMiddleX) OR $y > ($center['y'] + $offMiddleY)) OR ($x < ($center['x'] - $offMiddleX) OR $y < (($center['y'] - $offMiddleY))))
+				if (($x > ($position['x'] + $offMiddleX) OR $y > ($position['y'] + $offMiddleY)) OR ($x < ($position['x'] - $offMiddleX) OR $y < (($position['y'] - $offMiddleY))))
 					$dist = 'far';
-				else if (($x > ($center['x'] + $offNearX) OR $y > ($center['y'] + $offNearY)) OR ($x < ($center['x'] - $offNearX) OR $y < (($center['y'] - $offNearY))))
+				else if (($x > ($position['x'] + $offNearX) OR $y > ($position['y'] + $offNearY)) OR ($x < ($position['x'] - $offNearX) OR $y < (($position['y'] - $offNearY))))
 					$dist = 'middle';
-				else if (($x > ($center['x'] + $offShipX) OR $y > ($center['y'] + $offShipY)) OR ($x < ($center['x'] - $offShipX) OR $y < (($center['y'] - $offShipY))))
+				else if (($x > ($position['x'] + $offShipX) OR $y > ($position['y'] + $offShipY)) OR ($x < ($position['x'] - $offShipX) OR $y < (($position['y'] - $offShipY))))
 					$dist = 'near';
 				else
 					$dist = 'ship';

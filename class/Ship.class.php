@@ -42,7 +42,11 @@ abstract class				Ship
 		$this->_id = self::$_idCount;
 		$this->_owner = $owner;
 		$this->_state = "motionless";
-		$this->_position['dir'] = (($owner === 1) ? 'N' : 'S');
+		if ($owner === 1)
+			$this->_position['dir'] = 'N';
+		else
+			$this->_position['dir'] = 'S';
+		print("dir = " . $this->_position['dir'] . PHP_EOL);
 		$this->resetPP();
 	}
 
@@ -156,7 +160,8 @@ abstract class				Ship
 	{
 		if (isset($position['dir']))
 			$this->_position['dir'] = $position['dir'];
-		$this->_position = array('x' => $position['x'], 'y' => $position['y']);
+		$this->_position['x'] = $position['x'];
+		$this->_position['y'] = $position['y'];
 	}
 
 	public function			active()
@@ -198,13 +203,15 @@ abstract class				Ship
 
 	public function			getSpace($physical = FALSE)
 	{
-		$offX = ($this->_size['x'] - 1) / 2;
-		$offY = ($this->_size['y'] - 1) / 2;
+		$offl = ($this->_size['l'] - 1) / 2;
+		$offL = ($this->_size['L'] - 1) / 2;
 		if ($physical !== TRUE)
 		{
-			$offX += $this->_weapons[0]->getShootAera()['near'];
-			$offY += $this->_weapons[0]->getShootAera()['near'];
+			$offl += $this->_weapons[0]->getShootAera()['near'];
+			$offL += $this->_weapons[0]->getShootAera()['near'];
 		}
+		$offX = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
+		$offY = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
 		$x = $this->_position['x'] - $offX;
 		$y = $this->_position['y'] - $offY;
 		$xMax = $this->_position['x'] + $offX;

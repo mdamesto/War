@@ -6,8 +6,8 @@ class				ImperialDestroyer extends Ship
 	{
 		$this->_name = "Sword Of Absolution";
 		$this->_spriteSrc = "img/sprite/ImperialDestroyer.jpg";
-		$this->_size['x'] = 3; // 7
-		$this->_size['y'] = 1; // 3
+		$this->_size['L'] = 3; // 7
+		$this->_size['l'] = 1; // 3
 		$this->_maneuvrability = 3;
 		$this->_speed = 18;
 		$this->_PpMax = 10;
