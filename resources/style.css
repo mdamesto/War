@@ -1,11 +1,20 @@
 html {
-	background: url("http://www.ztconnect.com/wallpapers/space-wallpaper2.jpg") no-repeat center center fixed;
+	/*background: url("http://www.ztconnect.com/wallpapers/space-wallpaper2.jpg") no-repeat center center fixed;*/
 	background-size: cover;
+	background-color: #000;
 }
 
 .plateau {
 	position:relative;
 	border: 2px solid #555;
+	float:left;
+}
+.panel {
+	position:relative;
+	float:left;
+    width: 300px;
+    height: 800px;
+    background-color: grey;
 }
 
 .case {
@@ -15,7 +24,8 @@ html {
 }
 
 .case:hover {
-	background-color:black;
+	background-color:grey;
+	border: 1px solid white;
 }
 
 .a {
@@ -24,7 +34,11 @@ html {
 }
 
 .v {
-	background-color: red;
+	background-color: green;
+}
+
+.v1 {
+    background-color: red;
 }
 
 .v2 {

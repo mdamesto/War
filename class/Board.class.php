@@ -26,10 +26,13 @@ Class Board {
 			$this->width = 100;
 			$this->height = 80;
 			$this->init_map();
-
-
 		}
 			print ("BOARD CREATED" . PHP_EOL);
+	}
+
+	public function getSize()
+	{
+		return (array('x'=>$this->width, 'y'=>$this->height));
 	}
 
 	public function getPlayer1()
@@ -112,6 +115,30 @@ Class Board {
 			}
 		}
 		
+	}
+
+	private function getShipById($id)
+	{
+		foreach($this->ships as $ship)
+		{
+			if ($ship->getId() == $id)
+				return ($ship);
+		}
+	}
+
+	public function sendShips()
+	{
+		$jsonships = array();
+		for ( $i = 0;$i< $this->width; $i++) {
+			for ($j = 0;$j < $this->height ; $j++) {
+				if ($this->map[$i][$j] > 0)
+				{
+					$ship = $this->getShipById($this->map[$i][$j]);
+					$jsonships[]= array('x' => $i, 'y' => $j, 'id' => $ship->getId(), 'owner' => $ship->getOwner());
+				}
+			}
+		}
+		return ($jsonships);
 	}
 
 	public function sendAsteroid()

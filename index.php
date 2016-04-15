@@ -1,5 +1,9 @@
 <?php
 require_once("include.php");
+if (isset($_SESSION['board']))
+{
+  $board = unserialize($_SESSION['board']);
+  $size = $board->getSize();
 ?>
 <!DOCTYPE html>
 <html>
@@ -12,15 +16,29 @@ require_once("include.php");
 <body>
 <div class="plateau">
 <?php
-  for ($x = 1;$x <=150; $x++)
+  for ($x = 0;$x < $size['x']; $x++)
   {
-    for ($y = 1;$y <=100; $y++)
+    for ($y = 0;$y <$size['y']; $y++)
     {
       echo '<div class="case case_'.$x.'_'.$y.'"></div>';
     }
   }
 ?>
 </div>
+<div class="panel">
+  <div class="sub-panel">
+    PP
+  </div>
+  <div class="sub-panel">
+    Movement
+  </div>
+  <div class="sub-panel">
+    Attack
+  </div>
+</div>
 <script src="./resources/ajax.js"></script>
 </body>
 </html>
+<?php
+}
+?>

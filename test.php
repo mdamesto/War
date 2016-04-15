@@ -1,6 +1,6 @@
 <?php
 require_once("./include.php");
-session_destroy();
+//session_destroy();
 if (isset($_SESSION['board']))
 {
   $board = unserialize($_SESSION['board']);
@@ -13,7 +13,7 @@ else {
 
 
 //$board->add_meteor(55, 10, 9);
-//$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,8));
+$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,8));
 
 
 

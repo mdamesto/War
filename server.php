@@ -1,7 +1,8 @@
 <?php
 require_once("include.php");
 
-var_dump($_SESSION);
+//var_dump($_SESSION);
+
 
 
 $data = array(
@@ -32,18 +33,17 @@ $data = array(
   )
 );
 
-
-
-if ($_GET['get'] == "asteroid")
+if (isset($_SESSION['board']))
 {
-  if (isset($_SESSION['board']))
-  {
-    $board = unserialize($_SESSION['board']);
+  $board = unserialize($_SESSION['board']);
+
+  if ($_GET['get'] == "asteroid") {
+    echo json_encode($board->sendAsteroid());
   }
-  echo json_encode($board->sendAsteroid());
-}
-else if ($_GET['get'] == "ships") {
-  echo json_encode($data);
+  else if ($_GET['get'] == "ships") {
+    $ship = $board->sendShips();
+    echo json_encode($ship);
+  }
 }
 
 
