@@ -200,11 +200,6 @@ Class Board {
 	public function __destruct() {
 		$_SESSION['board'] = serialize($this);
 	}
-
-	public function __wakeup() {
-		//print ('Map unserialize...' . PHP_EOL);
-	}
-
 }
 
 ?>

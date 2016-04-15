@@ -240,6 +240,7 @@ abstract class				Ship
 
 	protected function			_go($val)
 	{
+		print_r($this->_position);
 		switch ($this->_position['dir'])
 		{
 			case 'N':
@@ -261,6 +262,7 @@ abstract class				Ship
 		else
 			$this->_state = 'motion';
 		$this->_lastState = $this->_state;
+		print_r($this->_position);
 	}
 
 	protected function			_tryRun($val)

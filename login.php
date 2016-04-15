@@ -58,7 +58,13 @@ if(isset($_POST['submit']) && $_POST['submit'] == "Login")
 <div class="stars"></div>
 <div class="twinkling"></div>
 <div class="clouds"></div><!---->
+
+
+
 <?php
+
+include("tau.php");
+
 if (!isset($_SESSION['id']))
 {
 ?>

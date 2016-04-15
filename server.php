@@ -1,38 +1,6 @@
 <?php
 require_once("include.php");
 
-//var_dump($_SESSION);
-
-
-
-$data = array(
-  array(
-    'pos'=>array('x'=>10, 'y'=>50),
-    'orient' => "south",
-    'size' => array(1 ,3)
-  ),
-  array(
-    'pos'=>array('x'=>20, 'y'=>10),
-    'orient' => "south",
-    'size' => array(1 ,3)
-  ),
-  array(
-    'pos'=>array('x'=>30, 'y'=>70),
-    'orient' => "south",
-    'size' => array(1 ,3)
-  ),
-  array(
-    'pos'=>array('x'=>50, 'y'=>50),
-    'orient' => "south",
-    'size' => array(1 ,3)
-  ),
-  array(
-    'pos'=>array('x'=>75, 'y'=>50),
-    'orient' => "south",
-    'size' => array(1 ,3)
-  )
-);
-
 if (isset($_SESSION['board']))
 {
   $board = unserialize($_SESSION['board']);
@@ -55,24 +23,25 @@ if (isset($_SESSION['board']))
     $case = array('x' => $tab[1], 'y' => $tab[2]);
     echo $owner;
 
-
+    foreach($board->getShips() as $ship)
+    {
+        print_r($ship->getPosition());
+    }
 
     $idShip = $board->getMap($case['x'],$case['y']);
     $ship = $board->getShipById($idShip);
-    if (!$ship->getOwner() == $owner)
-    {
-      echo "Enemy Ship";
-    }
+    $_SESSION['ship'] = $idShip;
+ 
 ?>
         <div class="sub-panel">
           <div class="sub-panel-head">
             Order <?php echo $ship->getName(); ?>
           </div>
           <div style="display:flex;">
-            <div class="viewer " id="PPleft">PP dispo:<?php echo $ship->getPpCurr(); ?></div>
-            <div class="viewer btn-rouge panel-btn" id="PVleft">PV restant:<?php echo $ship->getPvCurr(); ?></div>
+            <div class="viewer " id="PPleft">PP dispo:<?php echo $ship->getPp(); ?></div>
+            <div class="viewer btn-rouge panel-btn" id="PVleft">PV restant:<?php echo $ship->getPv(); ?></div>
             <div class="viewer btn-rouge panel-btn" id="Shield">Shield Value</div>
-            <div class="viewer btn-rouge panel-btn" id="Speed">Speed Value:<?php echo $ship->get_speedCurr(); ?></div>
+            <div class="viewer btn-rouge panel-btn" id="Speed">Speed Value:<?php echo $ship->getSpeed(); ?></div>
           </div>
           <div style="display:flex;">
             <div class="viewer btn-rouge panel-btn">Next</div>
@@ -86,7 +55,7 @@ if (isset($_SESSION['board']))
             Movement
           </div>
           <div style="display:flex;">
-            <div class="viewer panel-btn" id="Vitesse">Manoeuvre:<?php echo getManeuvrability; ?></div>
+            <div class="viewer panel-btn" id="Vitesse">Manoeuvre:<?php echo $ship->getManeuvre(); ?></div>
             <div class="viewer panel-btn" id="PVleft"></div>
             <div class="viewer" id="Shield"><input type="text" id="nb"></div>
             <div class="viewer panel-btn" id="Speed">Speed Value</div>
@@ -110,9 +79,11 @@ if (isset($_SESSION['board']))
   if (isset($_GET['action']) && $_GET['action'] == "btn")
   {
 
-		while ($this->tryMove($_GET['id'], $_GET['nb']) === FALSE)
-			echo "Can't move like this!";
-	
+          $ship = $board->getShipById($_SESSION['ship']);
+
+          //while (
+          echo $ship->tryMove($_GET['id'], $_GET['nb']); //=== FALSE)
+//			echo "Can't move like this!";
           //$this->run($_GET['nb']);
           echo $_GET['id'];
           echo $_GET['nb'];

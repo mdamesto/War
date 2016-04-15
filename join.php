@@ -4,13 +4,12 @@ if (isset($_SESSION['id']) && $_SESSION['id'] > 0)
 {
   $sql = "SELECT * FROM board WHERE (player1 == ".$_SESSION['id']." OR player2 == ".$_SESSION['id'].") AND status < 2";
   $result = $mysqli->query($sql);
-  if (!$result)
+  if(($result == NULL) || mysqli_num_rows($result) == 0)
   {
     $sql = "SELECT * FROM board WHERE status < 1";
     $result = $mysqli->query($sql);
-    if (!$result)
+    if(mysqli_num_rows($result) == 0)
     {
-      echo "ok";
       $sql = "INSERT INTO  `board` (
             `id` ,
             `status` ,
@@ -23,8 +22,28 @@ if (isset($_SESSION['id']) && $_SESSION['id'] > 0)
             );
             ";
       $mysqli->query($sql) or $mysqli->error;
-      $_SESSION['board'] = $mysqli->insert_id;
+      $_SESSION['board_id'] = $mysqli->insert_id;
     }
+    else
+    {
+      while($obj = $result->fetch_object()) { 
+        {
+          $_SESSION['board_id'] = $obj->id;
+        }
+      }
+    }
+  }
+  else
+  {
+    while($obj = $result->fetch_object()) { 
+        {
+          $_SESSION['board_id'] = $obj->id;
+        }
+      }
+  }
+  if (isset($_SESSION['board_id']))
+  {
+    echo "";
   }
 }
 ?>
