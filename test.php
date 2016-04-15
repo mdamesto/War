@@ -13,14 +13,13 @@ else {
 
 
 //$board->add_meteor(55, 10, 9);
-$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,8));
-
+$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,7));
 
 
 
 $board->addShip(new ImperialDestroyer(1));
-$board->addShip(new ImperialDestroyer(1));
-$board->addShip(new ImperialDestroyer(2));
+$board->addShip(new ImperialCruiser(1));
+$board->addShip(new ImperialCruiser(2));
 $board->addShip(new ImperialDestroyer(2));
 
 $board->placeShip();
