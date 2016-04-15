@@ -1,0 +1,27 @@
+<- Board ----------------------------------------------------------------------
+The Board class handles Player Fleet and Map.
+
+The class provides the following methods :
+
+Board addShip:
+add a ship to fleet;
+
+Board addShip:
+add a ship to fleet;
+
+Board placeShips
+place all the ships into the map
+
+Board replaceShip
+replace the ship you pass in paramater on the map (muste be use afer a move)
+
+Board sendShips/sendAsteroid
+Send new information about ships or asteroid to the display map
+
+Board print_map
+print map into the console
+
+Board add_meteor
+add a asteroid to the map param(position x, position y, size)
+
+---------------------------------------------------------------------- Color ->
