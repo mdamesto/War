@@ -80,15 +80,25 @@ if (isset($_SESSION['board']))
   {
 
           $ship = $board->getShipById($_SESSION['ship']);
+          if ($_GET['id'] == 'run') {
+            $i = -1;
+            while (++$i < $_GET['nb']) {
+               $ship->tryMove($_GET['id'], 1);
+               if ($board->replaceShip($ship) === false)
+                return;
+             }
+          }
+          else {
+            $ship->tryMove($_GET['id'], $_GET['nb']);
+            $board->replaceShip($ship);
+          }
 
-          //while (
-          echo $ship->tryMove($_GET['id'], $_GET['nb']); //=== FALSE)
-          $board->replaceShip($ship);
+          echo '<script>toto();</script>';
           
 //			echo "Can't move like this!";
           //$this->run($_GET['nb']);
-          echo $_GET['id'];
-          echo $_GET['nb'];
+          //echo $_GET['id'];
+          //echo $_GET['nb'];
           $board->print_map();
   }
 

@@ -2,14 +2,12 @@
 
 Trait Move {
 	public function			_go($val) {
-		print_r($this->_position);
 		$this->_oldPosition = $this->_position;
 		switch ($this->_position['dir']) {
 			case 'N':
 				$this->_position['y'] -= $val;
 				break ;
 			case 'S':
-				echo 'POS: ' . $this->_position['y'] . " VAL: " . $val . PHP_EOL;
 				$this->_position['y'] += $val;
 				break ;
 			case 'E':
@@ -24,8 +22,6 @@ Trait Move {
 		else
 			$this->_state = 'motion';
 		$this->_lastState = $this->_state;
-		print_r($this->_position);
-		print_r($this->_oldPosition);
 	}
 
 	protected function			_tryRun($val) {
@@ -82,7 +78,7 @@ Trait Move {
 	public function				tryMove($id, $val) {
 		if ($this->_speed === 0)
 			return FALSE;
-		print ($val . PHP_EOL);
+		//print ($val . PHP_EOL);
 		switch ($id) {
 			case 'run':
 				return $this->_tryRun($val);

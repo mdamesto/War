@@ -36,8 +36,15 @@ trait Position {
 		$offL = ($this->_size['L'] - 1) / 2;
 		if ($when == 'old' )
 		{
-			$offX = (($this->_oldPosition['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
-			$offY = (($this->_oldPosition['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
+			print_r ($this->_oldPosition);
+			if ($this->_oldPosition['dir'] === 'N' || $this->_oldPosition['dir'] === 'S') {
+				$offX = $offl;
+				$offY = $offL;
+			}
+			else {
+				$offX = $offL;
+				$offY = $offl;
+			}
 			$x = $this->_oldPosition['x'] - $offX;
 			$y = $this->_oldPosition['y'] - $offY;
 			$xMax = $this->_oldPosition['x'] + $offX;
@@ -45,8 +52,15 @@ trait Position {
 		}
 		else
 		{
-			$offX = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offl : $offL);
-			$offY = (($this->_position['dir'] === 'N' OR $this->_position['dir'] === 'S') ? $offL : $offl);
+			print_r ($this->_position);
+			if ($this->_position['dir'] === 'N' || $this->_position['dir'] === 'S') {
+				$offX = $offl;
+				$offY = $offL;
+			}
+			else {
+				$offX = $offL;
+				$offY = $offl;
+			}
 			$x = $this->_position['x'] - $offX;
 			$y = $this->_position['y'] - $offY;
 			$xMax = $this->_position['x'] + $offX;

@@ -13,8 +13,8 @@ else {
 
 
 //$board->add_meteor(55, 10, 9);
-$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,7));
-
+//$board->add_meteor(mt_rand(20,80), mt_rand(20,80), mt_rand(1,7));
+$board->add_meteor(15, 25, 10);
 
 
 $board->addShip(new ImperialDestroyer(1));
@@ -61,10 +61,10 @@ $board->print_map();
 print ($board->doc() . "LOL");
 //print_r($board->sendAsteroid());
 
-/*$shipToMove = $board->getShipById(3);
+$shipToMove = $board->getShipById(3);
 $shipToMove->_go(15);
 $board->replaceShip($shipToMove);
-$board->print_map();*/
+$board->print_map();
 
 echo "\n---BABAILLE---\n\n";
 

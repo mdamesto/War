@@ -54,10 +54,10 @@ Class Board implements General{
 					return (False);
 			if ($this->map[$k['x']][$k['y']] != 0)
 			{
-				return False;
+				return $this->map[$k['x']][$k['y']];
 			}
 		}
-		return True;
+		return 0;
 	}
 
 	public function placeShips()
@@ -69,7 +69,7 @@ Class Board implements General{
 				$x = 0;
 				$y = 0;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace(False))) {
+				while($this->checkPos($ship->getSpace(False))!== 0 ) {
 					$x++;
 					if ($x >= $this->width) {
 						$x=0;
@@ -85,7 +85,7 @@ Class Board implements General{
 				$x = $this->width;
 				$y = $this->height;
 				$ship->setPosition(array('x' => $x, 'y'=> $y));
-				while(!$this->checkPos($ship->getSpace(False)))
+				while($this->checkPos($ship->getSpace(False)) !== 0)
 				{
 					$x--;
 					if ($x <= 0)
@@ -109,15 +109,37 @@ Class Board implements General{
 	{
 		$tab = $ship->getFlatSpace('old');
 		foreach ($tab as $c)
-		{
 			$this->map[$c['x']][$c['y']] = 0;
+		$newPos = $this->checkPos($ship->getFlatSpace('new'));
+		if ($newPos == 0) {
+			$tab = $ship->getFlatSpace('new');
+			foreach ($tab as $c)
+				$this->map[$c['x']][$c['y']] = $ship->getAtt('_id');
+			return true;
 		}
-		$tab = $ship->getFlatSpace('new');
-		foreach ($tab as $c)
-		{
-			$this->map[$c['x']][$c['y']] = $ship->getAtt('_id');
+		else if($newPos == -1) {
+			$ship->__destruct();
+			return false;
 		}
+		else {
+			$ship2 = $this->getShipById($newPos);
+			$posShip2 = $ship2->getFlatSpace('new');
+			$ship2->takeDmg($ship->getAtt('_Pv'));
+			$ship->takeDmg($ship2->getAtt('_Pv'));
+			if (!$ship2)
+			foreach ($posShip2 as $c)
+				$this->map[$c['x']][$c['y']] = 0;
+			if ($ship) {
+				$ship->posEgalOldPos();
+				$tab = $ship->getFlatSpace('new');
+			}
+			foreach ($tab as $c)
+				$this->map[$c['x']][$c['y']] = $ship->getAtt('_id');
+			return false;
+		}
+
 	}
+
 
 	public function getShipById($id)
 	{

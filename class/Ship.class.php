@@ -89,6 +89,10 @@ abstract class				Ship implements General{
 			return file_get_contents('Ship.doc.txt');
 	}
 
+	public function posEgalOldPos() {
+		$this->_position = $this->_oldPosition;
+	}
+
 	public function getAtt( $_att ) {
 		return $this->$_att;
 	}
